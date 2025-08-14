@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Point 24 Horas — Bebidas & Lanches</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  :root{
+    --bg:#fff7fb;
+    --surface:#ffffff;
+    --card:#ffe9f4;
+    --ink:#2b2230;
+    --muted:#8b5470;
+    --accent:#ff3f9c;
+    --accent-2:#ff75bd;
+    --accent-3:#ffd1e8;
+    --shadow:0 10px 30px rgba(255,63,156,.12);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;color:var(--ink);background:var(--bg)}
+  a{text-decoration:none;color:inherit}
+
+  .container{max-width:1120px;margin:0 auto;padding:20px}
+
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:56px;height:56px;border-radius:16px;box-shadow:var(--shadow)}
+  .title{display:flex;flex-direction:column}
+  .title h1{margin:0;color:var(--accent);font-size:22px}
+  .title .tag{font-size:12px;color:var(--muted)}
+  .badge{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--accent-3);background:var(--surface);color:var(--accent)}
+
+  .layout{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+  @media (max-width:980px){.layout{grid-template-columns:1fr}}
+
+  .card{background:var(--surface);border:1px solid var(--accent-3);border-radius:18px;box-shadow:var(--shadow)}
+  .card .content{padding:16px}
+  .card h2{margin:0 0 12px;color:var(--accent);font-size:18px}
+
+  /* Chips de categorias (scroll horizontal no celular) */
+  .filters{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--accent-3);font-size:13px;color:var(--accent);cursor:pointer;transition:filter .15s}
+  .chip:hover{filter:brightness(1.03)}
+  .chip.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
+
+  /* Grid de produtos */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  @media (max-width:720px){.grid{grid-template-columns:1fr}}
+  .item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--accent-3);border-radius:14px;background:var(--surface)}
+  .photo{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.12);flex:0 0 auto}
+  .item h3{margin:0 0 4px;font-size:15px}
+  .desc{margin:0;color:var(--muted);font-size:12px}
+  .price{font-weight:700;color:var(--accent);margin-top:6px}
+  .spacer{flex:1}
+  .qty{display:flex;align-items:center;gap:8px}
+  .btn{border:1px solid var(--accent-3);background:var(--surface);color:var(--accent);padding:7px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+  .btn.plus{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:none}
+  .btn.small{padding:5px 8px}
+
+  /* Carrinho */
+  .cart{position:sticky;top:16px}
+  .cart-list{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+  .cart-item{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--accent-3);border-radius:12px;background:var(--surface)}
+  .cart-item .name{font-size:14px}
+  .muted{font-size:12px;color:var(--muted)}
+  .totals{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:14px}
+  .totals div{display:flex;justify-content:space-between}
+  .divider{height:1px;background:var(--accent-3);margin:6px 0}
+
+  .field{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  label{font-size:13px;color:var(--muted)}
+  input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--accent-3);background:var(--surface);color:var(--ink)}
+  textarea{min-height:72px}
+
+  .mode-buttons{display:flex;gap:10px}
+  .cta{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .btn-primary{padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:none;font-weight:700;cursor:pointer}
+  .btn-secondary{padding:10px;border-radius:12px;background:var(--surface);border:1px solid var(--accent-3);cursor:pointer;color:var(--accent)}
+  .small-note{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <!-- Logo em SVG (leve e bonito) -->
+        <svg class="logo" viewBox="0 0 64 64" aria-label="Point 24 Horas logo">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3f9c"/><stop offset="1" stop-color="#ff75bd"/></linearGradient></defs>
+          <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#g)"/>
+          <path d="M18 18h28l-2 12a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5l-2-12Z" fill="#fff" opacity=".9"/>
+          <rect x="18" y="40" width="28" height="6" rx="3" fill="#fff" opacity=".9"/>
+          <rect x="18" y="36" width="28" height="3" rx="1.5" fill="#fff" opacity=".9"/>
+        </svg>
+        <div class="title">
+          <h1>Point 24 Horas</h1>
+          <div class="tag">Monte seu combo • Finalize no WhatsApp</div>
+        </div>
+      </div>
+      <div class="badge">Entrega | Retirada</div>
+    </header>
+
+    <div class="layout">
+      <!-- Cardápio -->
+      <section class="card">
+        <div class="content">
+          <h2>Cardápio</h2>
+
+          <!-- Chips de categoria -->
+          <div class="filters" id="filters" role="tablist" aria-label="Categorias"></div>
+
+          <!-- Grid de itens -->
+          <div class="grid" id="menu"></div>
+        </div>
+      </section>
+
+      <!-- Carrinho -->
+      <aside class="card cart">
+        <div class="content">
+          <h2>Seu Pedido</h2>
+          <div class="cart-list" id="cartList"></div>
+
+          <div class="totals">
+            <div><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div>
+            <div><span>Taxa de entrega</span><span id="deliveryFee">R$ 0,00</span></div>
+            <div class="divider"></div>
+            <div><span>Total</span><strong id="total">R$ 0,00</strong></div>
+          </div>
+
+          <div class="field">
+            <label>Entrega ou Retirada?</label>
+            <div class="mode-buttons">
+              <button class="btn small" id="btnEntrega">Entrega</button>
+              <button class="btn small" id="btnRetirada">Retirada</button>
+            </div>
+          </div>
+
+          <div class="field" id="addressField">
+            <label for="address">Endereço (para entrega)</label>
+            <textarea id="address" placeholder="Rua, número, bairro, ponto de referência" required></textarea>
+          </div>
+
+          <div class="field" id="distanceField">
+            <label for="distance">Distância (km) — simulado</label>
+            <input id="distance" type="number" min="0" step="0.1" placeholder="Ex.: 3.5" />
+            <div class="small-note">Taxa calculada: R$ 1,50 por km.</div>
+          </div>
+
+          <div class="field">
+            <label for="clientName">Seu nome</label>
+            <input id="clientName" placeholder="Ex.: Maria" />
+          </div>
+
+          <div class="field">
+            <label for="payment">Pagamento</label>
+            <select id="payment">
+              <option value="Pix">Pix</option>
+              <option value="Cartão no local">Cartão no local</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="notes">Observações</label>
+            <textarea id="notes" placeholder="Ex.: sem pimenta, gelo extra, troco para 50"></textarea>
+          </div>
+
+          <div class="cta">
+            <button class="btn-primary" id="sendWhats">Finalizar no WhatsApp</button>
+            <button class="btn-secondary" id="clearCart">Limpar carrinho</button>
+            <div class="small-note">Seu pedido abrirá no WhatsApp <strong>(11) 95656-4363</strong> já formatado pra envio.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

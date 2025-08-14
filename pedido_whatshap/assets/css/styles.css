@@ -1,0 +1,73 @@
+:root{
+    --bg:#fff7fb;
+    --surface:#ffffff;
+    --card:#ffe9f4;
+    --ink:#2b2230;
+    --muted:#8b5470;
+    --accent:#ff3f9c;
+    --accent-2:#ff75bd;
+    --accent-3:#ffd1e8;
+    --shadow:0 10px 30px rgba(255,63,156,.12);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;color:var(--ink);background:var(--bg)}
+  a{text-decoration:none;color:inherit}
+
+  .container{max-width:1120px;margin:0 auto;padding:20px}
+
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:56px;height:56px;border-radius:16px;box-shadow:var(--shadow)}
+  .title{display:flex;flex-direction:column}
+  .title h1{margin:0;color:var(--accent);font-size:22px}
+  .title .tag{font-size:12px;color:var(--muted)}
+  .badge{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--accent-3);background:var(--surface);color:var(--accent)}
+
+  .layout{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+  @media (max-width:980px){.layout{grid-template-columns:1fr}}
+
+  .card{background:var(--surface);border:1px solid var(--accent-3);border-radius:18px;box-shadow:var(--shadow)}
+  .card .content{padding:16px}
+  .card h2{margin:0 0 12px;color:var(--accent);font-size:18px}
+
+  /* Chips de categorias (scroll horizontal no celular) */
+  .filters{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--accent-3);font-size:13px;color:var(--accent);cursor:pointer;transition:filter .15s}
+  .chip:hover{filter:brightness(1.03)}
+  .chip.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent}
+
+  /* Grid de produtos */
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  @media (max-width:720px){.grid{grid-template-columns:1fr}}
+  .item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--accent-3);border-radius:14px;background:var(--surface)}
+  .photo{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.12);flex:0 0 auto}
+  .item h3{margin:0 0 4px;font-size:15px}
+  .desc{margin:0;color:var(--muted);font-size:12px}
+  .price{font-weight:700;color:var(--accent);margin-top:6px}
+  .spacer{flex:1}
+  .qty{display:flex;align-items:center;gap:8px}
+  .btn{border:1px solid var(--accent-3);background:var(--surface);color:var(--accent);padding:7px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+  .btn.plus{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:none}
+  .btn.small{padding:5px 8px}
+
+  /* Carrinho */
+  .cart{position:sticky;top:16px}
+  .cart-list{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+  .cart-item{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--accent-3);border-radius:12px;background:var(--surface)}
+  .cart-item .name{font-size:14px}
+  .muted{font-size:12px;color:var(--muted)}
+  .totals{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:14px}
+  .totals div{display:flex;justify-content:space-between}
+  .divider{height:1px;background:var(--accent-3);margin:6px 0}
+
+  .field{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  label{font-size:13px;color:var(--muted)}
+  input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--accent-3);background:var(--surface);color:var(--ink)}
+  textarea{min-height:72px}
+
+  .mode-buttons{display:flex;gap:10px}
+  .cta{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .btn-primary{padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:none;font-weight:700;cursor:pointer}
+  .btn-secondary{padding:10px;border-radius:12px;background:var(--surface);border:1px solid var(--accent-3);cursor:pointer;color:var(--accent)}
+  .small-note{color:var(--muted);font-size:12px}
